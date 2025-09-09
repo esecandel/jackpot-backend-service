@@ -7,7 +7,7 @@ import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @TestConfiguration(proxyBeanMethods = false)
-class TestcontainersConfiguration {
+class TestContainersConfiguration {
 
 	@Bean
 	@ServiceConnection
