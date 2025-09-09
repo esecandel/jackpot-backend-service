@@ -2,7 +2,6 @@ package com.sporty.jackpot.infra.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sporty.jackpot.domain.model.ContributionType;
 import com.sporty.jackpot.domain.model.RewardType;
 import com.sporty.jackpot.infra.api.model.JackpotRequest;
@@ -122,7 +121,7 @@ class JackpotControllerTest {
         JackpotResponse.class
     );
 
-    UUID jackpotId = createResponse.getBody().id();
+    UUID jackpotId = Objects.requireNonNull(createResponse.getBody()).id();
 
     // Act
     ResponseEntity<JackpotResponse> response = restTemplate.getForEntity(
