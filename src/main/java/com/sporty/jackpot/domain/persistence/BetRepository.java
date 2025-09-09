@@ -7,8 +7,6 @@ import java.util.UUID;
 
 public interface BetRepository {
 
-  List<Bet> findByJackpotId(UUID jackpotId);
-
   Optional<Bet> findById(UUID betId);
 
   List<Bet> findAll();
