@@ -1,5 +1,6 @@
 package com.sporty.jackpot.domain;
 
+import com.github.dockerjava.api.exception.NotFoundException;
 import com.sporty.jackpot.domain.model.Jackpot;
 import com.sporty.jackpot.domain.persistence.JackpotRepository;
 import com.sporty.jackpot.infra.api.model.JackpotRequest;
@@ -36,7 +37,7 @@ public class JackpotCrudService {
 
   public JackpotResponse getById(UUID id) {
     Jackpot jackpot = repository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Jackpot not found"));
+        .orElseThrow(() -> new NotFoundException("Jackpot not found"));
     return toResponse(jackpot);
   }
 

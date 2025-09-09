@@ -3,7 +3,6 @@ package com.sporty.jackpot.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,9 +15,9 @@ import com.sporty.jackpot.domain.model.RewardType;
 import com.sporty.jackpot.domain.persistence.BetRepository;
 import com.sporty.jackpot.domain.persistence.JackpotRepository;
 import com.sporty.jackpot.domain.persistence.RewardRepository;
+import com.sporty.jackpot.infra.api.model.RewardResponse;
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,8 +68,7 @@ class BetServiceTest {
         BigDecimal initialPool = new BigDecimal("1000.00");
         BigDecimal currentPool = new BigDecimal("2000.00");
         
-        Bet bet = new Bet(userId, jackpotId, betAmount);
-        bet.setBetId(betId);
+        Bet bet = new Bet(betId, userId, jackpotId, betAmount);
         
         Jackpot jackpot = new Jackpot(
             "Test Jackpot",
@@ -86,14 +84,15 @@ class BetServiceTest {
         when(rewardChecker.evaluate(jackpot)).thenReturn(true); // Bet wins
         
         // Act
-        Reward reward = betService.checkReward(betId);
+        RewardResponse reward = betService.checkReward(betId);
         
         // Assert
         assertThat(reward).isNotNull();
-        assertThat(reward.getBetId()).isEqualTo(betId);
-        assertThat(reward.getJackpotId()).isEqualTo(jackpotId);
-        assertThat(reward.getUserId()).isEqualTo(userId);
-        assertThat(reward.getAmount()).isEqualTo(currentPool);
+        assertThat(reward.betId()).isEqualTo(betId);
+        assertThat(reward.jackpotId()).isEqualTo(jackpotId);
+        assertThat(reward.userId()).isEqualTo(userId);
+        assertThat(reward.amount()).isEqualTo(currentPool);
+        assertThat(reward.message()).isEqualTo("Congratulations! You have won the jackpot!");
         
         // Verify jackpot was reset and saved
         ArgumentCaptor<Jackpot> jackpotCaptor = ArgumentCaptor.forClass(Jackpot.class);
@@ -105,7 +104,10 @@ class BetServiceTest {
         ArgumentCaptor<Reward> rewardCaptor = ArgumentCaptor.forClass(Reward.class);
         verify(rewardRepository).save(rewardCaptor.capture());
         Reward savedReward = rewardCaptor.getValue();
-        assertThat(savedReward).isEqualTo(reward);
+        assertThat(reward.betId()).isEqualTo(savedReward.getBetId());
+        assertThat(reward.jackpotId()).isEqualTo(savedReward.getJackpotId());
+        assertThat(reward.userId()).isEqualTo(savedReward.getUserId());
+        assertThat(reward.amount()).isEqualTo(savedReward.getAmount());
     }
     
     @Test
@@ -118,7 +120,7 @@ class BetServiceTest {
         BigDecimal initialPool = new BigDecimal("1000.00");
         BigDecimal currentPool = new BigDecimal("2000.00");
         
-        Bet bet = new Bet(userId, jackpotId, betAmount);
+        Bet bet = new Bet(betId, userId, jackpotId, betAmount);
         bet.setBetId(betId);
         
         Jackpot jackpot = new Jackpot(
@@ -135,10 +137,15 @@ class BetServiceTest {
         when(rewardChecker.evaluate(jackpot)).thenReturn(false); // Bet does not win
         
         // Act
-        Reward reward = betService.checkReward(betId);
+        RewardResponse reward = betService.checkReward(betId);
         
         // Assert
-        assertThat(reward).isNull();
+        assertThat(reward).isNotNull();
+        assertThat(reward.betId()).isEqualTo(betId);
+        assertThat(reward.jackpotId()).isEqualTo(jackpotId);
+        assertThat(reward.userId()).isEqualTo(userId);
+        assertThat(reward.amount()).isEqualTo(BigDecimal.ZERO);
+        assertThat(reward.message()).isEqualTo("Sorry, no reward this time. Better luck next time!");
         
         // Verify jackpot was not modified or saved
         verify(jackpotRepository, never()).save(any(Jackpot.class));
@@ -173,7 +180,7 @@ class BetServiceTest {
         UUID jackpotId = UUID.randomUUID();
         BigDecimal betAmount = new BigDecimal("100.00");
         
-        Bet bet = new Bet(userId, jackpotId, betAmount);
+        Bet bet = new Bet(betId, userId, jackpotId, betAmount);
         bet.setBetId(betId);
         
         when(betRepository.findById(betId)).thenReturn(Optional.of(bet));

@@ -18,10 +18,11 @@ class BetRepositoryTest {
   @Test
   void saveBet_shouldPersistBetInDatabase() {
     // Arrange
+    UUID betId = UUID.randomUUID();
     UUID userId = UUID.randomUUID();
     UUID jackpotId = UUID.randomUUID();
     BigDecimal betAmount = new BigDecimal("100.50");
-    Bet bet = new Bet(userId, jackpotId, betAmount);
+    Bet bet = new Bet(betId, userId, jackpotId, betAmount);
 
     // Act
     betRepository.save(bet);
@@ -40,10 +41,11 @@ class BetRepositoryTest {
   @Test
   void findById_shouldReturnBetIfExists() {
     // Arrange
+    UUID betId = UUID.randomUUID();
     UUID userId = UUID.randomUUID();
     UUID jackpotId = UUID.randomUUID();
     BigDecimal betAmount = new BigDecimal("50.00");
-    Bet bet = new Bet(userId, jackpotId, betAmount);
+    Bet bet = new Bet(betId, userId, jackpotId, betAmount);
     betRepository.save(bet);
 
     // Act
@@ -57,8 +59,8 @@ class BetRepositoryTest {
   @Test
   void findAll_shouldReturnAllBets() {
     // Arrange
-    Bet bet1 = new Bet(UUID.randomUUID(), UUID.randomUUID(), new BigDecimal("25.00"));
-    Bet bet2 = new Bet(UUID.randomUUID(), UUID.randomUUID(), new BigDecimal("75.00"));
+    Bet bet1 = new Bet(UUID.randomUUID(),UUID.randomUUID(), UUID.randomUUID(), new BigDecimal("25.00"));
+    Bet bet2 = new Bet(UUID.randomUUID(),UUID.randomUUID(), UUID.randomUUID(), new BigDecimal("75.00"));
 
     betRepository.save(bet1);
     betRepository.save(bet2);
@@ -75,7 +77,7 @@ class BetRepositoryTest {
   @Test
   void deleteById_shouldRemoveBetFromDatabase() {
     // Arrange
-    Bet bet = new Bet(UUID.randomUUID(), UUID.randomUUID(), new BigDecimal("150.00"));
+    Bet bet = new Bet(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), new BigDecimal("150.00"));
     betRepository.save(bet);
 
     // Act

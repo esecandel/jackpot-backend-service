@@ -1,15 +1,16 @@
 package com.sporty.jackpot.infra.api;
 
 
+import com.github.dockerjava.api.exception.NotFoundException;
 import com.sporty.jackpot.domain.JackpotCrudService;
 import com.sporty.jackpot.infra.api.model.JackpotRequest;
 import com.sporty.jackpot.infra.api.model.JackpotResponse;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,5 +50,16 @@ public class JackpotController {
   public ResponseEntity<JackpotResponse> deleteById(@PathVariable UUID jackpotId) {
     jackpotCrudService.delete(jackpotId);
     return ResponseEntity.ok().build();
+  }
+
+  @ExceptionHandler(RuntimeException.class)
+  public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+  }
+
+
+  @ExceptionHandler(NotFoundException.class)
+  public ResponseEntity<String> handleRuntimeException(NotFoundException ex) {
+     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
   }
 }

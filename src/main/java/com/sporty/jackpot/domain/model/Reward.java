@@ -29,6 +29,7 @@ public class Reward {
   private RewardType rewardType;
   private BigDecimal amount;
   private LocalDateTime grantedAt = LocalDateTime.now();
+
 }
 
 

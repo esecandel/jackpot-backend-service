@@ -1,11 +1,6 @@
 package com.sporty.jackpot.domain.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -22,6 +17,7 @@ import lombok.ToString;
 @ToString
 public class Contribution {
 
+  private UUID betId;
   private BigDecimal contributionAmount;
   private LocalDateTime createdAt;
 }

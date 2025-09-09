@@ -4,7 +4,6 @@ import com.sporty.jackpot.domain.model.Bet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.stereotype.Repository;
 
 public interface BetRepository {
 

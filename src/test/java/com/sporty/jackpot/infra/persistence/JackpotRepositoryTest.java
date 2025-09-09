@@ -72,8 +72,12 @@ class JackpotRepositoryTest {
     List<Jackpot> jackpots = jackpotRepository.findAll();
 
     // Assert
-    assertThat(jackpots).hasSize(2);
-    assertThat(jackpots).extracting("name").containsExactlyInAnyOrder("Jackpot 1", "Jackpot 2");
+    assertThat(jackpots).hasSize(4); // Including the initial jackpots in the in-memory repo
+    assertThat(jackpots).extracting("name").containsExactlyInAnyOrder(
+        "Super Fixed Jackpot",
+        "Super Variable Jackpot",
+        "Jackpot 1",
+        "Jackpot 2");
   }
 
   @Test

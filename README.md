@@ -18,11 +18,17 @@ A backend service to manage jackpot contributions and rewards, developed with Sp
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/jackpot.git
+   git clone https://github.com/esecandel/jackpot.git
    cd jackpot
    ```
+2. **Start Kafka (mandatory):**
+   If you want to use a real Kafka instance, you can start one using Docker:
+   ```bash
+   docker-compose up -d
+   ```
+   Make sure to have a `docker-compose.yml` file configured for Kafka.
 
-2. **Run the application:**
+3. **Run the application:**
    ```bash
    ./mvnw spring-boot:run
    ```
@@ -31,11 +37,22 @@ A backend service to manage jackpot contributions and rewards, developed with Sp
    mvnw.cmd spring-boot:run
    ```
 
-3. **Access the APIs:**
-   - Publish bet: `POST /api/bets`
-   - Check reward: `GET /api/bets/{betId}/reward`
+4. **Access the APIs:**
+   - Use this URI to see the API doc: http://localhost:8080/swagger-ui.html
 
 ## API Usage
+
+There are 2 previous created jackpots:
+1. Fixed Contribution and Fixed Reward Jackpot
+   - ID: `73cada80-12e4-46b7-a0cb-a5eb99d4cafa`
+   - Contribution Type: FIXED (10%)
+   - Reward Type: FIXED (1% chance)
+   - Pool Limit: 10000.00 
+2. Variable Contribution and Variable Reward Jackpot
+   - ID: `83cada80-12e4-46b7-a0cb-a5eb99d4cafa`
+   - Contribution Type: VARIABLE (starts at 20%, decreases to 5% as pool reaches limit)
+   - Reward Type: VARIABLE (starts at 5% chance, increases to 100% as pool reaches limit)
+   - Pool Limit: 20000.00
 
 ### Publish a Bet
 ```
@@ -44,7 +61,7 @@ Content-Type: application/json
 
 {
   "userId": "123e4567-e89b-12d3-a456-426614174000",
-  "jackpotId": "123e4567-e89b-12d3-a456-426614174001",
+  "jackpotId": "73cada80-12e4-46b7-a0cb-a5eb99d4cafa",
   "amount": 100.00
 }
 ```
@@ -54,7 +71,7 @@ Response:
 {
   "id": "123e4567-e89b-12d3-a456-426614174002",
   "userId": "123e4567-e89b-12d3-a456-426614174000",
-  "jackpotId": "123e4567-e89b-12d3-a456-426614174001",
+  "jackpotId": "73cada80-12e4-46b7-a0cb-a5eb99d4cafa",
   "amount": 100.00,
   "createdAt": "2023-11-15T12:00:00"
 }
@@ -71,7 +88,7 @@ Response (if reward exists):
   "id": "123e4567-e89b-12d3-a456-426614174003",
   "betId": "123e4567-e89b-12d3-a456-426614174002",
   "userId": "123e4567-e89b-12d3-a456-426614174000",
-  "jackpotId": "123e4567-e89b-12d3-a456-426614174001",
+  "jackpotId": "73cada80-12e4-46b7-a0cb-a5eb99d4cafa",
   "amount": 5000.00,
   "grantedAt": "2023-11-15T12:01:00"
 }

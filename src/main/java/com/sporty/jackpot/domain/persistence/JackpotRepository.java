@@ -5,7 +5,6 @@ import com.sporty.jackpot.domain.model.Jackpot;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.stereotype.Repository;
 
 public interface JackpotRepository {
 

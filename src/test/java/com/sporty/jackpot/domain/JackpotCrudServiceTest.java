@@ -1,37 +1,26 @@
 package com.sporty.jackpot.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.sporty.jackpot.domain.model.ContributionType;
-import com.sporty.jackpot.domain.model.Jackpot;
 import com.sporty.jackpot.domain.model.RewardType;
-import com.sporty.jackpot.domain.persistence.JackpotRepository;
 import com.sporty.jackpot.infra.api.model.JackpotRequest;
 import com.sporty.jackpot.infra.api.model.JackpotResponse;
 import com.sporty.jackpot.infra.persistence.JackpotInMemoryRepository;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 class JackpotCrudServiceTest {
 
-    private JackpotRepository jackpotRepository;
     private JackpotCrudService jackpotCrudService;
 
     @BeforeEach
     void setUp() {
-        // Using a real implementation instead of a mock for simplicity
-        jackpotRepository = new JackpotInMemoryRepository();
-        jackpotCrudService = new JackpotCrudService(jackpotRepository);
+        jackpotCrudService = new JackpotCrudService(new JackpotInMemoryRepository());
     }
 
     @Test
@@ -82,9 +71,12 @@ class JackpotCrudServiceTest {
         List<JackpotResponse> responses = jackpotCrudService.getAll();
 
         // Assert
-        assertThat(responses).hasSize(2);
-        assertThat(responses).extracting("name")
-            .containsExactlyInAnyOrder("Jackpot 1", "Jackpot 2");
+        assertThat(responses).hasSize(4); // Including the initial jackpots in the in-memory repo
+        assertThat(responses).extracting("name").containsExactlyInAnyOrder(
+            "Super Fixed Jackpot",
+            "Super Variable Jackpot",
+            "Jackpot 1",
+            "Jackpot 2");
     }
 
     @Test
