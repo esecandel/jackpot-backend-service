@@ -19,8 +19,8 @@ public class Jackpot {
 
   private UUID jackpotId = UUID.randomUUID();
   private String name;
-  private BigDecimal initialPool;
-  private BigDecimal currentPool;
+  private BigDecimal initialPool = BigDecimal.ZERO;
+  private BigDecimal currentPool = BigDecimal.ZERO;
   private LocalDateTime createdAt = LocalDateTime.now();
   private ContributionType contributionType;
   private RewardType rewardType;
@@ -32,6 +32,7 @@ public class Jackpot {
       RewardType rewardType) {
     this.name = name;
     this.initialPool = initialPool;
+    this.currentPool = initialPool;
     this.contributionType = contributionType;
     this.rewardType = rewardType;
   }
