@@ -5,6 +5,7 @@ import com.sporty.jackpot.domain.model.Jackpot;
 import com.sporty.jackpot.domain.model.RewardType;
 import com.sporty.jackpot.domain.persistence.JackpotRepository;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,18 +19,28 @@ public class JackpotInMemoryRepository implements JackpotRepository {
   private final Map<UUID, Jackpot> storage = new HashMap<>();
 
   public JackpotInMemoryRepository() {
-    storage.put(UUID.fromString("73cada80-12e4-46b7-a0cb-a5eb99d4cafa"), new Jackpot(
+    UUID jackpotId1 = UUID.fromString("73cada80-12e4-46b7-a0cb-a5eb99d4cafa");
+    storage.put(jackpotId1, new Jackpot(
+        jackpotId1,
             "Super Fixed Jackpot",
             BigDecimal.valueOf(1000.0),
+            BigDecimal.valueOf(1000.0),
+            LocalDateTime.now(),
             ContributionType.FIXED,
-            RewardType.FIXED
+            RewardType.FIXED,
+            List.of()
         )
     );
-    storage.put(UUID.fromString("38b36029-44ea-4b38-b8cf-db64200dec3d"), new Jackpot(
+    UUID jackpotId2 = UUID.fromString("38b36029-44ea-4b38-b8cf-db64200dec3d");
+    storage.put(jackpotId2, new Jackpot(
+        jackpotId2,
         "Super Variable Jackpot",
         BigDecimal.valueOf(2000.0),
+        BigDecimal.valueOf(2000.0),
+        LocalDateTime.now(),
         ContributionType.VARIABLE,
-        RewardType.VARIABLE
+        RewardType.VARIABLE,
+        List.of()
     ));
 
   }
