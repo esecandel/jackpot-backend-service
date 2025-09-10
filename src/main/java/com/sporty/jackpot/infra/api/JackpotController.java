@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/jackpots")
+@RequestMapping("/api/jackpots")
 public class JackpotController {
 
   private final JackpotCrudService jackpotCrudService;

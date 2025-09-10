@@ -35,7 +35,7 @@ class JackpotControllerAcceptanceTest {
   private TestRestTemplate restTemplate;
 
   private String getBaseUrl() {
-    return "http://localhost:" + port + "/jackpots";
+    return "http://localhost:" + port + "/api/jackpots";
   }
 
   @Test

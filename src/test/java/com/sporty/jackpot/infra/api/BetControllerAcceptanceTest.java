@@ -50,7 +50,7 @@ class BetControllerAcceptanceTest {
   }
 
   private String getJackpotsUrl() {
-    return "http://localhost:" + port + "/jackpots";
+    return "http://localhost:" + port + "/api/jackpots";
   }
 
   private UUID jackpotId;
@@ -105,7 +105,7 @@ class BetControllerAcceptanceTest {
 
     // Wait a bit for the message to be processed
     try {
-      Thread.sleep(15000);
+      Thread.sleep(10000);
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
