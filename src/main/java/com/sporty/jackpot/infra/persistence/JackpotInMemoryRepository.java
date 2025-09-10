@@ -6,6 +6,7 @@ import com.sporty.jackpot.domain.model.RewardType;
 import com.sporty.jackpot.domain.persistence.JackpotRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class JackpotInMemoryRepository implements JackpotRepository {
             LocalDateTime.now(),
             ContributionType.FIXED,
             RewardType.FIXED,
-            List.of()
+            new ArrayList<>()
         )
     );
     UUID jackpotId2 = UUID.fromString("38b36029-44ea-4b38-b8cf-db64200dec3d");
@@ -40,7 +41,7 @@ public class JackpotInMemoryRepository implements JackpotRepository {
         LocalDateTime.now(),
         ContributionType.VARIABLE,
         RewardType.VARIABLE,
-        List.of()
+        new ArrayList<>()
     ));
 
   }

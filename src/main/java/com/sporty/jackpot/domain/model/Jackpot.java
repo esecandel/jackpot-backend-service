@@ -36,5 +36,10 @@ public class Jackpot {
     this.contributionType = contributionType;
     this.rewardType = rewardType;
   }
+
+  public void addContribution(Contribution contribution) {
+    this.contributions.add(contribution);
+    this.currentPool = this.currentPool.add(contribution.getContributionAmount());
+  }
 }
 

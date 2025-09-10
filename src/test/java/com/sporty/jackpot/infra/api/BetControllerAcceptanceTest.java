@@ -105,7 +105,7 @@ class BetControllerAcceptanceTest {
 
     // Wait a bit for the message to be processed
     try {
-      Thread.sleep(10000);
+      Thread.sleep(5000);
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }

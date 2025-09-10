@@ -20,6 +20,12 @@ public class Contribution {
   private UUID betId;
   private BigDecimal contributionAmount;
   private LocalDateTime createdAt;
+
+  public Contribution(UUID betId, BigDecimal contributionAmount) {
+    this.betId = betId;
+    this.contributionAmount = contributionAmount;
+    this.createdAt = LocalDateTime.now();
+  }
 }
 
 
