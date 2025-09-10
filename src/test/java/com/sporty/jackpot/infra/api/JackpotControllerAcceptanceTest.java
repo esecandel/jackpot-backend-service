@@ -26,7 +26,7 @@ import org.testcontainers.utility.TestcontainersConfiguration;
 @Import({TestcontainersConfiguration.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class JackpotControllerTest {
+class JackpotControllerAcceptanceTest {
 
   @LocalServerPort
   private int port;
